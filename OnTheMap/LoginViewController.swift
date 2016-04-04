@@ -1,9 +1,9 @@
 //
 //  LoginViewController.swift
-//  MyFavoriteMovies
+//  OnTheMap
 //
-//  Created by Jarrod Parkes on 1/23/15.
-//  Copyright (c) 2015 Udacity. All rights reserved.
+//  Created by Latchezar Mladenov on 3/23/16.
+//  Copyright © 2016 Latchezar Mladenov. All rights reserved.
 //
 
 import UIKit
@@ -23,6 +23,9 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: BorderedButton!
     @IBOutlet weak var debugTextLabel: UILabel!
+
+    @IBOutlet weak var overlayView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: Life Cycle
     
@@ -34,10 +37,13 @@ class LoginViewController: UIViewController {
         
         configureUI()
         
-        subscribeToNotification(UIKeyboardWillShowNotification, selector: Constants.Selectors.KeyboardWillShow)
-        subscribeToNotification(UIKeyboardWillHideNotification, selector: Constants.Selectors.KeyboardWillHide)
-        subscribeToNotification(UIKeyboardDidShowNotification, selector: Constants.Selectors.KeyboardDidShow)
-        subscribeToNotification(UIKeyboardDidHideNotification, selector: Constants.Selectors.KeyboardDidHide)
+        activityIndicator.hidesWhenStopped = true
+        overlayView.hidden = true
+        
+        subscribeToNotification(UIKeyboardWillShowNotification, selector: UIConstants.Selectors.KeyboardWillShow)
+        subscribeToNotification(UIKeyboardWillHideNotification, selector: UIConstants.Selectors.KeyboardWillHide)
+        subscribeToNotification(UIKeyboardDidShowNotification, selector: UIConstants.Selectors.KeyboardDidShow)
+        subscribeToNotification(UIKeyboardDidHideNotification, selector: UIConstants.Selectors.KeyboardDidHide)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -48,38 +54,51 @@ class LoginViewController: UIViewController {
     // MARK: Login
     
     @IBAction func loginPressed(sender: AnyObject) {
+        userDidTapView(self)
         
-        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-        self.presentViewController(controller, animated: true, completion: nil)
+        if usernameTextField.text == "" {
+            alert("Enter Username!")
+            return
+        }
         
-//        userDidTapView(self)
-//        
-//        if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-//            debugTextLabel.text = "Username or Password Empty."
-//        } else {
-//            setUIEnabled(false)
-//            
-//            /*
-//                Steps for Authentication...
-//                https://www.themoviedb.org/documentation/api/sessions
-//                
-//                Step 1: Create a request token
-//                Step 2: Ask the user for permission via the API ("login")
-//                Step 3: Create a session ID
-//                
-//                Extra Steps...
-//                Step 4: Get the user id ;)
-//                Step 5: Go to the next view!            
-//            */
-//          //  getRequestToken()
-//        }
+        if passwordTextField.text == "" {
+            alert("Enter Password")
+            return
+        }
+        
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+            self.view.bringSubviewToFront(self.overlayView)
+            self.overlayView.hidden = false
+        }
+        
+        UdacityClient.sharedInstance().loginWith(usernameTextField.text!, password: passwordTextField.text!) { (result, error) in
+            if (result == "success") {
+                self.completeLogin()
+            } else {
+                self.alert("Login Failed")
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.stopAnimating()
+                    self.overlayView.hidden = true
+                })
+            }
+        }
     }
     
     private func completeLogin() {
         performUIUpdatesOnMain {
             self.debugTextLabel.text = ""
             self.setUIEnabled(true)
-            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MoviesTabBarController") as! UITabBarController
+            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+            self.presentViewController(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func alert(text: String) {
+        performUIUpdatesOnMain {
+            let controller = UIAlertController(title: nil, message: text, preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            controller.addAction(action)
             self.presentViewController(controller, animated: true, completion: nil)
         }
     }
@@ -161,7 +180,7 @@ extension LoginViewController {
         
         // configure background gradient
         let backgroundGradient = CAGradientLayer()
-        backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
+        backgroundGradient.colors = [UIConstants.Colors.LoginColorTop, UIConstants.Colors.LoginColorBottom]
         backgroundGradient.locations = [0.0, 1.0]
         backgroundGradient.frame = view.frame
         view.layer.insertSublayer(backgroundGradient, atIndex: 0)
@@ -175,10 +194,10 @@ extension LoginViewController {
         let textFieldPaddingView = UIView(frame: textFieldPaddingViewFrame)
         textField.leftView = textFieldPaddingView
         textField.leftViewMode = .Always
-        textField.backgroundColor = Constants.UI.GreyColor
-        textField.textColor = Constants.UI.BlueColor
+        textField.backgroundColor = UIConstants.Colors.GreyColor
+        textField.textColor = UIConstants.Colors.BlueColor
         textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-        textField.tintColor = Constants.UI.BlueColor
+        textField.tintColor = UIConstants.Colors.BlueColor
         textField.delegate = self
     }
 }

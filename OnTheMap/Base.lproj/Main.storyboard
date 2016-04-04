@@ -67,6 +67,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.80000001192092896" contentMode="scaleAspectFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yax-wE-RVW">
+                                <rect key="frame" x="-45" y="0.0" width="679" height="600"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uKi-Tc-Lyv">
+                                        <rect key="frame" x="335" y="555" width="20" height="20"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="uKi-Tc-Lyv" firstAttribute="centerY" secondItem="Yax-wE-RVW" secondAttribute="centerY" id="fMw-Sn-ne9"/>
+                                    <constraint firstItem="uKi-Tc-Lyv" firstAttribute="centerX" secondItem="Yax-wE-RVW" secondAttribute="centerX" id="hLf-rJ-ztj"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6Bb-l4-nEs">
                                 <rect key="frame" x="20" y="55" width="560" height="527"/>
                                 <subviews>
@@ -85,7 +100,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="osl-cg-9u6">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="l.mladenov21@gmail.com" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="osl-cg-9u6">
                                         <rect key="frame" x="0.0" y="160" width="560" height="32"/>
                                         <color key="backgroundColor" red="0.67632260870000005" green="0.92051799479999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -136,9 +151,23 @@
                         <color key="backgroundColor" red="0.35070900710000003" green="0.79530321839999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Yax-wE-RVW" secondAttribute="trailing" id="1dm-3p-Ied"/>
+                            <constraint firstItem="Yax-wE-RVW" firstAttribute="top" secondItem="ojN-fY-5RM" secondAttribute="bottom" constant="35" id="377-gm-qiO"/>
+                            <constraint firstItem="Yax-wE-RVW" firstAttribute="leading" secondItem="7P9-rO-HeK" secondAttribute="leading" id="5bs-0x-48C"/>
+                            <constraint firstItem="Yax-wE-RVW" firstAttribute="top" secondItem="7P9-rO-HeK" secondAttribute="top" id="Drr-Zq-H60"/>
                             <constraint firstItem="6Bb-l4-nEs" firstAttribute="top" secondItem="ojN-fY-5RM" secondAttribute="bottom" constant="35" id="Hrl-T4-CVA"/>
+                            <constraint firstItem="Yax-wE-RVW" firstAttribute="leading" secondItem="7P9-rO-HeK" secondAttribute="leading" id="KyA-r4-CNh"/>
+                            <constraint firstItem="Yax-wE-RVW" firstAttribute="leading" secondItem="7P9-rO-HeK" secondAttribute="leading" id="OnN-SS-axm"/>
+                            <constraint firstItem="EKo-ow-o9Z" firstAttribute="top" secondItem="Yax-wE-RVW" secondAttribute="bottom" constant="18" id="UQ3-Ob-GXh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Yax-wE-RVW" secondAttribute="trailing" constant="35" id="d73-t6-vad"/>
+                            <constraint firstItem="Yax-wE-RVW" firstAttribute="leading" secondItem="7P9-rO-HeK" secondAttribute="leadingMargin" id="etc-Ea-fY3"/>
+                            <constraint firstItem="Yax-wE-RVW" firstAttribute="leading" secondItem="7P9-rO-HeK" secondAttribute="leadingMargin" constant="35" id="gmr-Ol-o2h"/>
                             <constraint firstItem="6Bb-l4-nEs" firstAttribute="leading" secondItem="7P9-rO-HeK" secondAttribute="leadingMargin" id="i8S-H7-FEn"/>
+                            <constraint firstItem="EKo-ow-o9Z" firstAttribute="top" secondItem="Yax-wE-RVW" secondAttribute="bottom" id="iBw-Af-Jyr"/>
+                            <constraint firstAttribute="trailing" secondItem="Yax-wE-RVW" secondAttribute="trailing" constant="98" id="is2-5a-LVH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Yax-wE-RVW" secondAttribute="trailing" id="jDu-Go-Niy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6Bb-l4-nEs" secondAttribute="trailing" id="n1m-MI-BPs"/>
+                            <constraint firstAttribute="trailing" secondItem="Yax-wE-RVW" secondAttribute="trailing" id="pod-sD-7MP"/>
                             <constraint firstAttribute="bottomMargin" secondItem="6Bb-l4-nEs" secondAttribute="bottom" constant="18" id="w6c-jn-d4k"/>
                         </constraints>
                         <connections>
@@ -146,8 +175,10 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="uKi-Tc-Lyv" id="DVf-XW-jHm"/>
                         <outlet property="debugTextLabel" destination="y0q-ea-tDL" id="VuT-QW-gO6"/>
                         <outlet property="loginButton" destination="fnz-Ij-n1T" id="NEB-vR-3DB"/>
+                        <outlet property="overlayView" destination="Yax-wE-RVW" id="ygw-zo-ufh"/>
                         <outlet property="passwordTextField" destination="Y1Z-n7-lUx" id="g9W-Zj-Mur"/>
                         <outlet property="usernameTextField" destination="osl-cg-9u6" id="WFS-Ho-C51"/>
                     </connections>
