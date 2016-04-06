@@ -14,9 +14,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // The map. See the setup in the Storyboard file. Note particularly that the view controller
     // is set up as the map view's delegate.
     @IBOutlet weak var mapView: MKMapView!
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: #selector(MapViewController.logout))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("add"))
         
         // The "locations" array is an array of dictionary objects that are similar to the JSON
         // data that you can download from parse.
@@ -59,6 +62,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    func logout() {
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController")
+        self.presentViewController(controller!, animated: true, completion: nil)
+    }
+    
     // MARK: - MKMapViewDelegate
     
     // Here we create a view with a "right callout accessory view". You might choose to look into other
@@ -73,7 +81,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinColor = .Red
+            pinView!.pinTintColor = UIColor.redColor()
             pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
         else {

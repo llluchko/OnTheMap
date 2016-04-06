@@ -23,7 +23,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: BorderedButton!
     @IBOutlet weak var debugTextLabel: UILabel!
-
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -103,6 +102,13 @@ class LoginViewController: UIViewController {
         }
     }
     
+    
+    
+    @IBAction func signUp(sender: AnyObject) {
+        if let url = NSURL(string: "https://www.udacity.com") {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
 
 }
 
