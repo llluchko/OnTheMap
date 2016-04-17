@@ -41,4 +41,25 @@ extension UdacityClient {
     }
     
     
+    func getUserInfo(completionHandler: (results: String, error: String?) -> Void) {
+        let _ = taskForGetMethod(Methods.UsersID + "/\(userID!)", completionHandler: { (result, error) in
+            if let result = result.valueForKey("user") as? [String: AnyObject] {
+                if let lastName = result["lastName"] as? String {
+                    self.lastName = lastName
+                    if let firstName = result["firstName"] as? String {
+                        self.firstName = firstName
+                        completionHandler(results: "success", error: nil)
+                    } else {
+                        completionHandler(results: "", error: "Failed to parse firstName from JSON")
+                    }
+                } else {
+                    completionHandler(results: "", error: "Failed to parse lastName from JSON")
+                }
+            } else {
+                completionHandler(results: "", error: "Failed to parse user from JSON")
+            }
+        })
+    }
+    
+    
 }

@@ -10,15 +10,12 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
-    
-    // The map. See the setup in the Storyboard file. Note particularly that the view controller
-    // is set up as the map view's delegate.
     @IBOutlet weak var mapView: MKMapView!
   
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: #selector(MapViewController.logout))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("add"))
         
         // The "locations" array is an array of dictionary objects that are similar to the JSON
@@ -62,9 +59,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    func logout() {
-        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController")
-        self.presentViewController(controller!, animated: true, completion: nil)
+    func refresh() {
+        //
     }
     
     // MARK: - MKMapViewDelegate
