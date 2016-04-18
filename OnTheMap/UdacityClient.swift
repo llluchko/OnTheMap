@@ -97,7 +97,7 @@ class UdacityClient: NSObject {
     }
     
         
-        // MARK: - Shared Instance
+    // MARK: - Shared Instance
         
     class func sharedInstance() -> UdacityClient {
         

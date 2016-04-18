@@ -8,16 +8,9 @@
 
 import UIKit
 
-// MARK: - LoginViewController: UIViewController
-
 class LoginViewController: UIViewController {
-    
-    // MARK: Properties
-    
-    var appDelegate: AppDelegate!
+   
     var keyboardOnScreen = false
-    
-    // MARK: Outlets
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -26,14 +19,10 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // get the app delegate
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate                        
-        
+    
         configureUI()
         
         activityIndicator.hidesWhenStopped = true
@@ -76,29 +65,34 @@ class LoginViewController: UIViewController {
                 self.completeLogin()
             } else {
                 self.alert("Login Failed")
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.activityIndicator.stopAnimating()
-                    self.overlayView.hidden = true
-                })
             }
         }
     }
     
     private func completeLogin() {
-        performUIUpdatesOnMain {
-            self.debugTextLabel.text = ""
-            self.setUIEnabled(true)
-            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-            self.presentViewController(controller, animated: true, completion: nil)
+        UdacityClient.sharedInstance().getUserInfo { (result, error) in
+            if result == "success" {
+                performUIUpdatesOnMain {
+                    self.debugTextLabel.text = ""
+                    self.setUIEnabled(true)
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
+            } else {
+                self.alert("Login Failed")
+            }
         }
     }
     
+
     func alert(text: String) {
         performUIUpdatesOnMain {
             let controller = UIAlertController(title: nil, message: text, preferredStyle: .Alert)
             let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
             controller.addAction(action)
             self.presentViewController(controller, animated: true, completion: nil)
+            self.activityIndicator.stopAnimating()
+            self.overlayView.hidden = true
         }
     }
     
@@ -112,18 +106,13 @@ class LoginViewController: UIViewController {
 
 }
 
-// MARK: - LoginViewController: UITextFieldDelegate
 
 extension LoginViewController: UITextFieldDelegate {
-    
-    // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
-    // MARK: Show/Hide Keyboard
     
     func keyboardWillShow(notification: NSNotification) {
         if !keyboardOnScreen {
@@ -163,7 +152,6 @@ extension LoginViewController: UITextFieldDelegate {
     }
 }
 
-// MARK: - LoginViewController (Configure UI)
 
 extension LoginViewController {
     
@@ -174,7 +162,6 @@ extension LoginViewController {
         debugTextLabel.text = ""
         debugTextLabel.enabled = enabled
         
-        // adjust login button alpha
         if enabled {
             loginButton.alpha = 1.0
         } else {
@@ -184,7 +171,6 @@ extension LoginViewController {
     
     private func configureUI() {
         
-        // configure background gradient
         let backgroundGradient = CAGradientLayer()
         backgroundGradient.colors = [UIConstants.Colors.LoginColorTop, UIConstants.Colors.LoginColorBottom]
         backgroundGradient.locations = [0.0, 1.0]
@@ -208,7 +194,6 @@ extension LoginViewController {
     }
 }
 
-// MARK: - LoginViewController (Notifications)
 
 extension LoginViewController {
     

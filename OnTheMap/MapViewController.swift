@@ -65,10 +65,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func add() {
-        
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("AddStudentLocation")
+        self.presentViewController(controller!, animated: true, completion: nil)
     }
-    
-    // MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"

@@ -39,10 +39,9 @@ class TableViewController: UITableViewController {
     }
     
     func add() {
-          // TO-DO Add location
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("AddStudentLocation")
+        self.presentViewController(controller!, animated: true, completion: nil)
     }
-    
-  
     
     func alert(text: String) {
         let alertView = UIAlertView()
@@ -63,7 +62,7 @@ extension TableViewController {
         let studentLocation = locations[indexPath.row]
         cell.textLabel?.text = "\(studentLocation.firstName) \(studentLocation.lastName)"
         cell.detailTextLabel?.text = studentLocation.mediaURL
-      //  cell.imageView?.image = UIImage(named: "pin")
+        cell.imageView?.image = UIImage(named: "pin")
         
         return cell
     }
