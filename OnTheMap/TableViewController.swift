@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
-    var locations: [StudentLocation] = [StudentLocation]()
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: #selector(TableViewController.refresh))
@@ -22,13 +22,13 @@ class TableViewController: UITableViewController {
     func getStudentLocations() {
         ParseClient.sharedInstance().getLocations() { (result, error) in
             if let results = result {
-                self.locations = results
+                StudentStoredData.sharedInstance().locations = results
                 performUIUpdatesOnMain() {
                     self.tableView.reloadData()
                 }
             } else {
                 performUIUpdatesOnMain() {
-                    self.alert("Failed to get locations")
+                    self.alert(error!)
                 }
             }
         }
@@ -54,12 +54,12 @@ class TableViewController: UITableViewController {
 
 extension TableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        return StudentStoredData.sharedInstance().locations.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("cell")!
-        let studentLocation = locations[indexPath.row]
+        let studentLocation = StudentStoredData.sharedInstance().locations[indexPath.row]
         cell.textLabel?.text = "\(studentLocation.firstName) \(studentLocation.lastName)"
         cell.detailTextLabel?.text = studentLocation.mediaURL
         cell.imageView?.image = UIImage(named: "pin")
@@ -68,7 +68,7 @@ extension TableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let url = NSURL(string: locations[indexPath.row].mediaURL) {
+        if let url = NSURL(string: StudentStoredData.sharedInstance().locations[indexPath.row].mediaURL) {
             UIApplication.sharedApplication().openURL(url)
         }
     }

@@ -64,7 +64,9 @@ class LoginViewController: UIViewController {
             if (result == "success") {
                 self.completeLogin()
             } else {
-                self.alert("Login Failed")
+                performUIUpdatesOnMain() {
+                    self.alert(error!)
+                }
             }
         }
     }
@@ -79,7 +81,9 @@ class LoginViewController: UIViewController {
                     self.presentViewController(controller, animated: true, completion: nil)
                 }
             } else {
-                self.alert("Login Failed")
+                performUIUpdatesOnMain() {
+                    self.alert(error!)
+                }
             }
         }
     }

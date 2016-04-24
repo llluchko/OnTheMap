@@ -12,7 +12,7 @@ extension ParseClient {
     
     func getLocations(completionHandler: (results: [StudentLocation]?, error: String?) -> Void) {
         var locations = [StudentLocation]()
-        let _ = taskForGetMethod(["limit": "100"], method: "") { (JSONResult, error) in
+        let _ = taskForGetMethod(["limit": "100", "order": "-updatedAt"], method: "") { (JSONResult, error) in
             if let error = error {
                 completionHandler(results: locations, error: error.description)
             } else {

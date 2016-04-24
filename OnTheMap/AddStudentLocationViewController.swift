@@ -17,6 +17,9 @@ class AddStudentLocationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var findOnTheMapButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     
+    @IBOutlet weak var overlayView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var latitude: Double?
     var longitude: Double?
     var location: String?
@@ -24,6 +27,9 @@ class AddStudentLocationViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.hidesWhenStopped = true
+        overlayView.hidden = true
         
         locationTextBox.delegate = self
         linkToShareTextBox.delegate = self
@@ -45,10 +51,16 @@ class AddStudentLocationViewController: UIViewController, UITextFieldDelegate {
         }
         
         location = locationTextBox.text
+        
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+            self.view.bringSubviewToFront(self.overlayView)
+            self.overlayView.hidden = false
+        }
+        
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location!, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
             if let placemark = placemarks?[0] {
-                
                 self.mapView.addAnnotation(MKPlacemark(placemark: placemark))
                 self.mapView.hidden = false
                 self.findOnTheMapButton.hidden = true
@@ -62,6 +74,10 @@ class AddStudentLocationViewController: UIViewController, UITextFieldDelegate {
                 
                 self.latitude = placemark.location?.coordinate.latitude
                 self.longitude = placemark.location?.coordinate.longitude
+                performUIUpdatesOnMain() {
+                    self.activityIndicator.stopAnimating()
+                    self.overlayView.hidden = true
+                }
             } else {
                 performUIUpdatesOnMain() {
                     self.alert("Could not find location")
@@ -101,6 +117,8 @@ class AddStudentLocationViewController: UIViewController, UITextFieldDelegate {
             alertView.message = text
             alertView.addButtonWithTitle("OK")
             alertView.show()
+            self.activityIndicator.stopAnimating()
+            self.overlayView.hidden = true
         }
     }
     

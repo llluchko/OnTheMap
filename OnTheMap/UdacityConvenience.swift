@@ -60,7 +60,23 @@ extension UdacityClient {
             }
         })
     }
-
     
+    func logout(completionHandler: (results: String, errorString: String?) -> Void) {
+        let _ = taskForDeleteMethod(Constants.AuthorizationURL, method: Methods.Session) { (JSONResult , error) in
+            if let error = error {
+                completionHandler(results: "" , errorString: error.description)
+            } else {
+                if let result = JSONResult.valueForKey("session") as? [String:String] {
+                    if let session = result["id"] {
+                        self.sessionID = session
+                        completionHandler(results: "success", errorString: nil)
+                    }
+                } else {
+                    completionHandler(results: "", errorString: "Failed to parse session from JSON")
+                }
+            }
+        }
+
+    }
     
 }

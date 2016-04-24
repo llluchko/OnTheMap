@@ -34,6 +34,7 @@ struct StudentLocation {
         updatedAt = dictionary[ParseClient.JSONResponseKeys.updatedAt] as! String
     }
     
+
     static func locationFromResults(results: [[String: AnyObject]]) -> [StudentLocation] {
         var locations = [StudentLocation]()
         

@@ -85,14 +85,14 @@ class ParseClient {
         }
     }
     
-    class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {
+    class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError?) -> NSError {
         if let parsedResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as? [String : AnyObject] {
             if let errorMessage = parsedResult[ParseClient.JSONResponseKeys.StatusMessage] as? String {
                 let userInfo = [NSLocalizedDescriptionKey : errorMessage]
                 return NSError(domain: "Parse Error", code: 1, userInfo: userInfo)
             }
         }
-        return error
+        return error!
     }
     
     class func escapedParameters(parameters: [String : AnyObject]) -> String {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		690DD12B1CCD51AA00059CD6 /* StudentStoredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690DD12A1CCD51AA00059CD6 /* StudentStoredData.swift */; };
 		6955D82E1CA5FFFD00957EB7 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6955D82D1CA5FFFD00957EB7 /* UdacityClient.swift */; };
 		6955D8321CB1354D00957EB7 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6955D8311CB1354D00957EB7 /* UdacityConvenience.swift */; };
 		6955D8381CB179DB00957EB7 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6955D8371CB179DB00957EB7 /* ParseConstants.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		690DD12A1CCD51AA00059CD6 /* StudentStoredData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentStoredData.swift; sourceTree = "<group>"; };
 		6955D82D1CA5FFFD00957EB7 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		6955D8311CB1354D00957EB7 /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
 		6955D8371CB179DB00957EB7 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		6989A1151CA3445A00FA87F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				690DD12A1CCD51AA00059CD6 /* StudentStoredData.swift */,
 				6989A1171CA344B200FA87F6 /* Clients */,
 			);
 			name = Model;
@@ -242,6 +245,7 @@
 				6989A11D1CA3455200FA87F6 /* UdacityConstants.swift in Sources */,
 				69F43B991CA22E3700E6D799 /* LoginViewController.swift in Sources */,
 				6955D8321CB1354D00957EB7 /* UdacityConvenience.swift in Sources */,
+				690DD12B1CCD51AA00059CD6 /* StudentStoredData.swift in Sources */,
 				699512D51CA0C98600358C11 /* TableViewController.swift in Sources */,
 				698DF6E41CBD59CF00B66DF7 /* StudentLocation.swift in Sources */,
 				699512D11CA0C98600358C11 /* AppDelegate.swift in Sources */,

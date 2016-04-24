@@ -39,6 +39,38 @@ class UdacityClient: NSObject {
         task.resume()
     }
     
+    func taskForDeleteMethod(base: String, method:String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> Void {
+        let urlString = base + method
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        
+        request.HTTPMethod = "DELETE"
+        var xsrfCookie: NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil {
+                let newError = UdacityClient.errorForData(data, response: response, error: error!)
+                completionHandler(result: nil, error: newError)
+            } else {
+                let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
+                UdacityClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    
+    
     
     func taskForPostMethod(base: String, method: String, jsonBody: [String: AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         let urlString = base + method

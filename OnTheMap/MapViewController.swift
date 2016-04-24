@@ -11,13 +11,14 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         mapView.delegate = self
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: #selector(MapViewController.refresh))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(MapViewController.add))
+            
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: #selector(MapViewController.logout))
+            
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: #selector(MapViewController.refresh)), UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(MapViewController.add))]
         
         getStudentLocations()
         
@@ -32,7 +33,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             } else {
                 performUIUpdatesOnMain() {
-                    self.alert("Failed to get locations")
+                    self.alert(error!)
                 }
             }
         }
@@ -58,6 +59,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         return annotations
+    }
+    
+    func logout() {
+        UdacityClient.sharedInstance().logout() { (result, error) in
+            if result ==  "success" {
+                performUIUpdatesOnMain() {
+                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController")
+                    self.presentViewController(controller!, animated: true, completion: nil)
+                }
+            } else {
+                self.alert(error!)
+            }
+        }
     }
         
     func refresh() {
