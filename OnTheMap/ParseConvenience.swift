@@ -20,7 +20,8 @@ extension ParseClient {
                     locations = StudentLocation.locationFromResults(result)
                     completionHandler(results: locations, error: nil)
                 } else {
-                    completionHandler(results: locations, error: "Failed to parse results from JSON")
+                    completionHandler(results: locations, error: "Oops! Something went wrong!")
+                    print("Failed to parse results from JSON")
                 }
             }
         }
@@ -34,7 +35,8 @@ extension ParseClient {
                 if let result = JSONResult.valueForKey("createdAt") as? String {
                     completionHandler(result: result, error: nil)
                 } else {
-                    completionHandler(result: "", error: "Failed to parse object from JSON")
+                    completionHandler(result: "", error: "Oops! Something went wrong!")
+                    print("Failed to parse object from JSON")
                 }
             }
         }

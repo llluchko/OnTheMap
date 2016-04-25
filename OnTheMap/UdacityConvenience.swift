@@ -27,7 +27,8 @@ extension UdacityClient {
                         self.sessionID = session
                     }
                 } else {
-                    completionHandler(result: "", errorString: "Failed to parse session from JSON")
+                    completionHandler(result: "", errorString: "Oops! Something went wrong!")
+                    print("Failed to parse session from JSON")
                 }
                 if let account = JSONResult.valueForKey("account") as? NSDictionary {
                     if let userID = account["key"] as? String {
@@ -35,7 +36,8 @@ extension UdacityClient {
                         completionHandler(result: "success", errorString: nil)
                     }
                 } else {
-                    completionHandler(result: "", errorString: "Failed to parse userID from JSON")
+                    completionHandler(result: "", errorString: "Oops! Something went wrong!")
+                    print("Failed to parse userID from JSON")
                 }
             }
         }
@@ -50,13 +52,16 @@ extension UdacityClient {
                         self.firstName = firstname
                         completionHandler(results: "success", errorString: nil)
                     } else {
-                        completionHandler(results: "" , errorString: "Failed to parse firstname from JSON")
+                        completionHandler(results: "" , errorString: "Oops! Something went wrong!")
+                        print("Failed to parse firstname from JSON")
                     }
                 } else {
-                    completionHandler(results: "" , errorString: "Failed to parse lastname from JSON")
+                    completionHandler(results: "" , errorString: "Oops! Something went wrong!")
+                    print("Failed to parse lastname from JSON")
                 }
             } else {
-                completionHandler(results: "" , errorString: "Failed to parse user from JSON")
+                completionHandler(results: "" , errorString: "Oops! Something went wrong!")
+                print("Failed to parse user from JSON")
             }
         })
     }
@@ -72,7 +77,8 @@ extension UdacityClient {
                         completionHandler(results: "success", errorString: nil)
                     }
                 } else {
-                    completionHandler(results: "", errorString: "Failed to parse session from JSON")
+                    completionHandler(results: "", errorString: "Oops! Something went wrong!")
+                    print("Failed to parse session from JSON")
                 }
             }
         }

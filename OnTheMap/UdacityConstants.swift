@@ -12,18 +12,21 @@ import UIKit
 extension UdacityClient {
     
     struct Constants {
+       
         // MARK: URLs
+        
         static let AuthorizationURL : String = "https://www.udacity.com/api/"
     }
     struct Methods {
-        
+    
         // MARK: Account
+        
         static let Session = "session"
         static let UsersID = "users"
         
         // MARK: Parse
-        static let AccountIDFavorite = "{id}"
         
+        static let AccountIDFavorite = "{id}"
     }
 }
 

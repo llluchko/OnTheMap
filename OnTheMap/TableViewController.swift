@@ -13,8 +13,10 @@ class TableViewController: UITableViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: #selector(TableViewController.refresh))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(TableViewController.add))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Reply, target: self, action: #selector(MapViewController.logout))
+        
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: #selector(MapViewController.refresh)), UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(MapViewController.add))]
+
    
         getStudentLocations()
     }
@@ -30,6 +32,19 @@ class TableViewController: UITableViewController {
                 performUIUpdatesOnMain() {
                     self.alert(error!)
                 }
+            }
+        }
+    }
+    
+    func logout() {
+        UdacityClient.sharedInstance().logout() { (result, error) in
+            if result ==  "success" {
+                performUIUpdatesOnMain() {
+                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController")
+                    self.presentViewController(controller!, animated: true, completion: nil)
+                }
+            } else {
+                self.alert(error!)
             }
         }
     }

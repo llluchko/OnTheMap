@@ -14,14 +14,6 @@ class BorderedButton: UIButton {
 
     // MARK: Properties
     
-    // constants for styling and configuration
-    let darkerBlue = UIColor(red: 0.0, green: 0.298, blue: 0.686, alpha:1.0)
-    let lighterBlue = UIColor(red: 0.0, green:0.502, blue:0.839, alpha: 1.0)
-    let titleLabelFontSize: CGFloat = 17.0
-    let borderedButtonHeight: CGFloat = 44.0
-    let borderedButtonCornerRadius: CGFloat = 4.0
-    let phoneBorderedButtonExtraPadding: CGFloat = 14.0
-    
     var backingColor: UIColor? = nil
     var highlightedBackingColor: UIColor? = nil
     
@@ -39,12 +31,12 @@ class BorderedButton: UIButton {
     
     private func themeBorderedButton() {
         layer.masksToBounds = true
-        layer.cornerRadius = borderedButtonCornerRadius
-        highlightedBackingColor = darkerBlue
-        backingColor = lighterBlue
-        backgroundColor = lighterBlue
+        layer.cornerRadius = UIConstants.Setup.borderedButtonCornerRadius
+        highlightedBackingColor = UIConstants.Colors.darkerBlue
+        backingColor = UIConstants.Colors.lighterBlue
+        backgroundColor = UIConstants.Colors.lighterBlue
         setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        titleLabel?.font = UIFont.systemFontOfSize(titleLabelFontSize)
+        titleLabel?.font = UIFont.systemFontOfSize(UIConstants.Setup.titleLabelFontSize)
     }
     
     // MARK: Setters
@@ -79,10 +71,10 @@ class BorderedButton: UIButton {
     // MARK: Layout
     
     override func sizeThatFits(size: CGSize) -> CGSize {
-        let extraButtonPadding : CGFloat = phoneBorderedButtonExtraPadding
+        let extraButtonPadding : CGFloat = UIConstants.Setup.phoneBorderedButtonExtraPadding
         var sizeThatFits = CGSizeZero
         sizeThatFits.width = super.sizeThatFits(size).width + extraButtonPadding
-        sizeThatFits.height = borderedButtonHeight
+        sizeThatFits.height = UIConstants.Setup.borderedButtonHeight
         return sizeThatFits
     }
 }

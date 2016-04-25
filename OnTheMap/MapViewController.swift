@@ -98,13 +98,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         return pinView
     }
-    
-    
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.sharedApplication()
-            if let toOpen = view.annotation?.subtitle! {
-                app.openURL(NSURL(string: toOpen)!)
+        
+    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == annotationView.rightCalloutAccessoryView {
+            if let subtitle = annotationView.annotation!.subtitle {
+                if let url = NSURL(string: subtitle!) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
             }
         }
     }
