@@ -13,7 +13,7 @@ extension ParseClient {
     struct  Constants {
         static let ParseAppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let ParseAPIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
-        static let BaseURL : String = "https://api.parse.com/1/classes/StudentLocation"
+        static let BaseURL : String = "https://parse.udacity.com/parse/classes/StudentLocation"
     }
     
     struct Methods {
