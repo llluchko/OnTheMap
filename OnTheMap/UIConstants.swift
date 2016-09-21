@@ -36,9 +36,9 @@ struct UIConstants {
     // MARK: Selectors
     
     struct Selectors {
-        static let KeyboardWillShow: Selector = "keyboardWillShow:"
-        static let KeyboardWillHide: Selector = "keyboardWillHide:"
-        static let KeyboardDidShow: Selector = "keyboardDidShow:"
-        static let KeyboardDidHide: Selector = "keyboardDidHide:"
+        static let KeyboardWillShow: Selector = Selector("keyboardWillShow:")
+        static let KeyboardWillHide: Selector = Selector("keyboardWillHide:")
+        static let KeyboardDidShow: Selector = Selector("keyboardDidShow:")
+        static let KeyboardDidHide: Selector = Selector("keyboardDidHide:")
     }
 }
